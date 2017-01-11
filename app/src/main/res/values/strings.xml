@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">STG</string>
+    <string-array name="listitems">
+        <item>Common Diseases</item>
+        <item>Emergencies</item>
+        <item>Cardiovascular Diseases</item>
+        <item>Blood Diseases</item>
+        <item>Respiratory Diseases</item>
+        <item>Gastrointestinal Diseases</item>
+        <item>Infections- Bacterial, Viral and Opportunistic</item>
+        <item>Parasitic Infections</item>
+        <item>Central Nervous system Diseases</item>
+        <item>Genitourinary Diseases</item>
+        <item>Hormonal Disorders</item>
+        <item>ENT Diseases</item>
+        <item>Eye Diseases</item>
+        <item>Skin Diseases</item>
+        <item>Obstetrics and Gynaecology</item>
+        <item>Psychiatric Conditions</item>
+        <item>Orthopaedic Conditions</item>
+        <item>Surgery</item>
+        <item>Paediatric Conditions</item>
+    </string-array>
+
+    <string-array name="listItem2">
+        <item>Acute Fever</item>
+        <item>Fever in children</item>
+        <item>Fever of unknown origin</item>
+
+    </string-array>
+    <string name="title_activity_main2">STG</string>
+
+
+</resources>
