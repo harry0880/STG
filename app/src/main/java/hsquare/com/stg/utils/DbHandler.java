@@ -1,5 +1,6 @@
 package hsquare.com.stg.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -22,6 +23,24 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    public void insertData()
+    {
+        SQLiteDatabase db= getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(C_Diseases_ID,"1001");
+        cv.put(C_Diseases_Details,"Acute Fever");
+        db.insert(Tbl_Diseases,null,cv);
+
+        cv=new ContentValues();
+        cv.put(C_Diseases_ID,"5001");
+        cv.put(C_Diseases_Details,"Acute Fever");
+        db.insert(Tbl_Diseases,null,cv);
+
+        cv=new ContentValues();
+
 
     }
 }
