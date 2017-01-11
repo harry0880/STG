@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import hsquare.com.stg.getset.Disease_Fragments;
 import hsquare.com.stg.getset.Getset_ListView;
+import hsquare.com.stg.utils.DbHandler;
 
 /**
  * Created by harpreetsingh on 28/12/16.
@@ -29,6 +30,7 @@ public class ListActivity_Fragment extends Fragment {
     String[] items;
     Disease_Fragments getset;
     ArrayList<Getset_ListView> listItems;
+    DbHandler dbh;
 
 
     @Nullable
@@ -38,20 +40,17 @@ public class ListActivity_Fragment extends Fragment {
         final View list = inflater.inflate(R.layout.list_frag, container, false);
 
         init(list);
+  //      dbh.insertData();
         if(getset.getFragment_id()==null) {
             items = getResources().getStringArray(R.array.listitems);
-            listItems=new ArrayList<>();
-            int cnt=0;
-            for (String arr:items) {
-            listItems.add(new Getset_ListView(cnt,items[cnt]));
-                cnt++;
-            }
+            listItems=dbh.getInnerList();
         }
         else
         {
             items=getResources().getStringArray(R.array.listItem2);
+            listItems=dbh.getInnerList();
         }
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,items);
+        ArrayAdapter<Getset_ListView> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,11 +61,11 @@ public class ListActivity_Fragment extends Fragment {
               {
                   startActivity(new Intent(getActivity(),displayHTML.class));
               }
-                getset.setFragment_id(parent.getItemAtPosition(position).toString());
+              /* getset.setFragment_id(parent.getItemAtPosition(position).toString());
                 Fragment fragment=new ListActivity_Fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();
+                        .replace(R.id.frame_container, fragment).commit();*/
 
             }
         });
@@ -76,6 +75,8 @@ public class ListActivity_Fragment extends Fragment {
     private void init(View list)
     {
         getset=new Disease_Fragments();
+        dbh=new DbHandler(getActivity());
         lv = (ListView) list.findViewById(R.id.lv);
+        listItems=new ArrayList<>();
     }
 }

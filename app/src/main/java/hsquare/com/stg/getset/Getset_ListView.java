@@ -16,20 +16,25 @@ public class Getset_ListView {
 
 
 
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 
-    int Id;
 
-    public Getset_ListView(int id, String name) {
+
+    public Getset_ListView(String  id, String name) {
         Id = id;
         Name = name;
     }
 
-    String Name;
+    String Name,Id;
+
+
+    public String toString() {
+     return Name;
+    }
 }

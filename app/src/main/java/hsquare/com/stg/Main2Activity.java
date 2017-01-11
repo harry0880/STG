@@ -100,6 +100,7 @@ public class Main2Activity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 return false;
             }
 
