@@ -70,7 +70,7 @@ public class displayHTML extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_html);
         html=(TextView) findViewById(R.id.htmltag);
-dbh=new DbHandler(displayHTML.this);
+       dbh=new DbHandler(displayHTML.this);
         html.setText(Html.fromHtml(dbh.getHTML()));
 
 
