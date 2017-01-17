@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
 
+import hsquare.com.stg.utils.DbHandler;
+
 public class displayHTML extends AppCompatActivity {
 
     TextView html;
+    DbHandler dbh;
 
     String html_str="<h1>ACUTE FEVER</h1>\n" +
             "The overall mean oral temperature for healthy adult individuals is 36.8 ± 0.4ºC, with a nadir at 6 AM and a peak at 4-6 PM. A morning temperature of greater than 37.2ºC and an evening temperature of greater than 37.7ºC is often considered as fever. Fever may be continuous, intermittent or remittent. However, with frequent self-medication with antipyretics, classic patterns are not generally seen. \n" +
@@ -66,7 +69,7 @@ public class displayHTML extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_html);
         html=(TextView) findViewById(R.id.htmltag);
-
-        html.setText(Html.fromHtml(html_str));
+dbh=new DbHandler(displayHTML.this);
+        html.setText(Html.fromHtml(dbh.getHTML()));
     }
 }

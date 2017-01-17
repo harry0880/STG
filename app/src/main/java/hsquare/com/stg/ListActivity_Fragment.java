@@ -28,9 +28,10 @@ public class ListActivity_Fragment extends Fragment {
 
     ListView lv;
     String[] items;
-    Disease_Fragments getset;
+    static Disease_Fragments getset=null;
     ArrayList<Getset_ListView> listItems;
     DbHandler dbh;
+    static  int cnt=0;
 
 
     @Nullable
@@ -42,30 +43,53 @@ public class ListActivity_Fragment extends Fragment {
         init(list);
   //      dbh.insertData();
         if(getset.getFragment_id()==null) {
-            items = getResources().getStringArray(R.array.listitems);
-            listItems=dbh.getInnerList();
+
+            listItems=dbh.getMainList();
         }
-        else
+        else if(getset.getFragment_id().substring(0,1).equals("1"))
         {
-            items=getResources().getStringArray(R.array.listItem2);
-            listItems=dbh.getInnerList();
+            listItems=dbh.getInnerList(getset);
         }
-        ArrayAdapter<Getset_ListView> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listItems);
+        final ArrayAdapter<Getset_ListView> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-              if(getset!=null)
+        cnt++;
+              if(cnt==3)
               {
+
                   startActivity(new Intent(getActivity(),displayHTML.class));
               }
-              /* getset.setFragment_id(parent.getItemAtPosition(position).toString());
+    else
+                {
+
+                   Getset_ListView ob=(Getset_ListView) adapter.getItem(position);
+                    getset.setFragment_id(ob.getId());
                 Fragment fragment=new ListActivity_Fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();*/
+                        .replace(R.id.frame_container, fragment).commit();
+                }
+
+
+
+            }
+        });
+
+        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getset.setFragment_id(((Getset_ListView) lv.getSelectedItem()).getId());
+                Fragment fragment=new ListActivity_Fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment).commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -79,4 +103,5 @@ public class ListActivity_Fragment extends Fragment {
         lv = (ListView) list.findViewById(R.id.lv);
         listItems=new ArrayList<>();
     }
+
 }

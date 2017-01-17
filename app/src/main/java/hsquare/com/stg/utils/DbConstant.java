@@ -18,9 +18,17 @@ package hsquare.com.stg.utils;
      String C_DiseasesHeader_ID="C_DiseasesHeader_ID";
      String C_DiseasesHeader_Details="C_DiseasesHeader_Details";
     
-     String Tbl_DiseasesCaegory="T_DiseasesCaegory";
+     String Tbl_DiseasesCategory="T_DiseasesCaegory";
      String C_DiseasesCategory_ID="C_DiseasesCategory_ID";
      String C_DiseasesCategory_Details="C_DiseasesCategory_Details";
+
+     String Tbl_SubDiseaseid="T_SubDiseaseid";
+    String C_SubDiseaseid="C_SubDiseaseid";
+    String C_SubDiseaseDetail="C_SubDiseaseDetail";
+
+    String Tbl_DiseasesContainer="TblDiseasecontainer";
+    String C_diseaseheaddetail_content="C_diseaseheaddetail_content";
+
     
      String Create_Table_Diseases="Create Table "+Tbl_Diseases+" ("+C_Diseases_ID+" TEXT,"
             +C_Diseases_Details+" TEXT)";
@@ -28,9 +36,16 @@ package hsquare.com.stg.utils;
      String Create_Table_DiseasesHeader="Create Table "+Tbl_DiseasesHeader+" ("+C_DiseasesHeader_ID+" TEXT,"
             +C_DiseasesHeader_Details+" TEXT)";
 
-     String Create_Table_DiseasesCatgory="Create Table "+Tbl_DiseasesCaegory+" ("+C_DiseasesCategory_ID+" TEXT,"
+     String Create_Table_DiseasesCatgory="Create Table "+Tbl_DiseasesCategory+" ("+C_DiseasesCategory_ID+" TEXT,"
             +C_DiseasesCategory_Details+" TEXT)";
-    
+
+    String Create_Table_Diseasecontainer="Create Table "+Tbl_DiseasesContainer+" ("+C_DiseasesCategory_ID+" TEXT,"
+            +C_DiseasesCategory_Details+" TEXT,"
+            +C_Diseases_ID+" TEXT,"
+            +C_Diseases_Details+" TEXT,"
+            +C_SubDiseaseid+" TEXT,"
+            +C_SubDiseaseDetail+" TEXT,"
+            +C_diseaseheaddetail_content+" TEXT)";
     
 
     

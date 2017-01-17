@@ -2,6 +2,7 @@ package hsquare.com.stg;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,7 @@ public class Main2Activity extends AppCompatActivity {
     String[] menuItems={"Favourites","Standard Treatment Guidelines","Medicine","Directory"};
     int[] images={R.drawable.fav,R.drawable.stg,R.drawable.med,R.drawable.dir};
     private MaterialSearchView searchView;
+    static int PageCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,7 @@ public class Main2Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               startActivity(new Intent(Main2Activity.this,displayHTML.class));
             }
         });
 
