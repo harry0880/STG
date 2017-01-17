@@ -1,5 +1,6 @@
 package hsquare.com.stg;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -71,5 +72,13 @@ public class displayHTML extends AppCompatActivity {
         html=(TextView) findViewById(R.id.htmltag);
 dbh=new DbHandler(displayHTML.this);
         html.setText(Html.fromHtml(dbh.getHTML()));
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(displayHTML.this,Main2Activity.class));
+        super.onBackPressed();
     }
 }

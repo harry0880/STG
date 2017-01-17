@@ -31,7 +31,8 @@ public class ListActivity_Fragment extends Fragment {
     static Disease_Fragments getset=null;
     ArrayList<Getset_ListView> listItems;
     DbHandler dbh;
-    static  int cnt=0;
+   public static int cnt=0;
+    ArrayList<String> ar;
 
 
     @Nullable
@@ -46,7 +47,7 @@ public class ListActivity_Fragment extends Fragment {
 
             listItems=dbh.getMainList();
         }
-        else if(getset.getFragment_id().substring(0,1).equals("1"))
+        else if(getset.getFragment_id()!=null)
         {
             listItems=dbh.getInnerList(getset);
         }
@@ -56,24 +57,27 @@ public class ListActivity_Fragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        cnt++;
-              if(cnt==3)
+                cnt=cnt+1;
+              if(cnt==2)
               {
 
                   startActivity(new Intent(getActivity(),displayHTML.class));
+
+                    cnt=0;
+                  getset.setFragment_id(null);
+                  getActivity().finish();
               }
     else
                 {
 
-                   Getset_ListView ob=(Getset_ListView) adapter.getItem(position);
-                    getset.setFragment_id(ob.getId());
-                Fragment fragment=new ListActivity_Fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
+                 Getset_ListView ob=(Getset_ListView) adapter.getItem(position);
+                 getset.setFragment_id(ob.getId());
+                 getset.arList.add(ob.getId());
+                 Fragment fragment=new ListActivity_Fragment();
+                 FragmentManager fragmentManager = getFragmentManager();
+                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
                 }
-
-
 
             }
         });
@@ -102,6 +106,10 @@ public class ListActivity_Fragment extends Fragment {
         dbh=new DbHandler(getActivity());
         lv = (ListView) list.findViewById(R.id.lv);
         listItems=new ArrayList<>();
+        ar=new ArrayList<>();
     }
+
+
+
 
 }

@@ -1,5 +1,7 @@
 package hsquare.com.stg.getset;
 
+import java.util.ArrayList;
+
 /**
  * Created by harpreetsingh on 29/12/16.
  */
@@ -15,4 +17,6 @@ public class Disease_Fragments {
     }
 
     static String fragment_id=null;
+    public static ArrayList<String> arList=new ArrayList<>();
+    public static int cnt=0;
 }

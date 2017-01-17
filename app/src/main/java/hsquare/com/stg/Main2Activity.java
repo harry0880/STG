@@ -23,6 +23,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 
+import hsquare.com.stg.getset.Disease_Fragments;
+
 public class Main2Activity extends AppCompatActivity {
 
     String[] menuItems={"Favourites","Standard Treatment Guidelines","Medicine","Directory"};
@@ -129,6 +131,7 @@ public class Main2Activity extends AppCompatActivity {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
+           // Disease_Fragments.arList.get(Disease_Fragments.cnt-1);
             super.onBackPressed();
         }
     }
