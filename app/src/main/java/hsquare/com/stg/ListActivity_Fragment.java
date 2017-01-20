@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hsquare.com.stg.getset.Disease_Fragments;
 import hsquare.com.stg.getset.Getset_ListView;
@@ -31,7 +32,7 @@ public class ListActivity_Fragment extends Fragment {
     static Disease_Fragments getset=null;
     ArrayList<Getset_ListView> listItems;
     DbHandler dbh;
-   public static int cnt=0;
+
     ArrayList<String> ar;
 
 
@@ -57,13 +58,11 @@ public class ListActivity_Fragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cnt=cnt+1;
-              if(cnt==2)
+                Disease_Fragments.cnt=Disease_Fragments.cnt+1;
+              if(Disease_Fragments.cnt==3)
               {
-
                   startActivity(new Intent(getActivity(),displayHTML.class));
-
-                    cnt=0;
+                   Disease_Fragments.cnt=0;
                   getset.setFragment_id(null);
                   getActivity().finish();
               }
@@ -75,28 +74,15 @@ public class ListActivity_Fragment extends Fragment {
                  getset.arList.add(ob.getId());
                  Fragment fragment=new ListActivity_Fragment();
                  FragmentManager fragmentManager = getFragmentManager();
-                 fragmentManager.beginTransaction()
+                 fragmentManager.beginTransaction().addToBackStack(Disease_Fragments.cnt+"")
                         .replace(R.id.frame_container, fragment).commit();
                 }
 
-            }
-        });
-
-        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getset.setFragment_id(((Getset_ListView) lv.getSelectedItem()).getId());
-                Fragment fragment=new ListActivity_Fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+
         return list;
     }
 
@@ -108,8 +94,4 @@ public class ListActivity_Fragment extends Fragment {
         listItems=new ArrayList<>();
         ar=new ArrayList<>();
     }
-
-
-
-
 }

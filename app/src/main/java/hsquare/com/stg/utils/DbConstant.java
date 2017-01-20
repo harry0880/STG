@@ -30,14 +30,6 @@ package hsquare.com.stg.utils;
     String C_diseaseheaddetail_content="C_diseaseheaddetail_content";
 
     
-     String Create_Table_Diseases="Create Table "+Tbl_Diseases+" ("+C_Diseases_ID+" TEXT,"
-            +C_Diseases_Details+" TEXT)";
-
-     String Create_Table_DiseasesHeader="Create Table "+Tbl_DiseasesHeader+" ("+C_DiseasesHeader_ID+" TEXT,"
-            +C_DiseasesHeader_Details+" TEXT)";
-
-     String Create_Table_DiseasesCatgory="Create Table "+Tbl_DiseasesCategory+" ("+C_DiseasesCategory_ID+" TEXT,"
-            +C_DiseasesCategory_Details+" TEXT)";
 
     String Create_Table_Diseasecontainer="Create Table "+Tbl_DiseasesContainer+" ("+C_DiseasesCategory_ID+" TEXT,"
             +C_DiseasesCategory_Details+" TEXT,"

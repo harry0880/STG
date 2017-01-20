@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="hsquare.com.stg.Main2Activity">
+    tools:context="hsquare.com.stg.Search">
 
 
     <FrameLayout
@@ -27,18 +27,10 @@
 
     </FrameLayout>
 
-    <include layout="@layout/content_main2"
+    <include layout="@layout/content_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        />
+        android:layout_marginTop="?attr/actionBarSize"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

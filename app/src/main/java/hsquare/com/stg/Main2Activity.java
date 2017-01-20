@@ -77,11 +77,11 @@ public class Main2Activity extends AppCompatActivity {
                         break;
                     default:
                         break;
-
                 }
                 if (fragment != null) {
+                    Disease_Fragments.cnt++;
                     FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction()
+                    fragmentManager.beginTransaction().addToBackStack(Disease_Fragments.cnt+"")
                             .replace(R.id.frame_container, fragment).commit();
                 }
                 return false;
@@ -119,10 +119,8 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
-
         return true;
     }
 
@@ -131,6 +129,8 @@ public class Main2Activity extends AppCompatActivity {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
+            getSupportFragmentManager().popBackStack(Disease_Fragments.cnt+"",
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
            // Disease_Fragments.arList.get(Disease_Fragments.cnt-1);
             super.onBackPressed();
         }
