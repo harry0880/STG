@@ -91,7 +91,10 @@ public class Main2Activity extends AppCompatActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-
+                Fragment fragment = new Search_Fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().addToBackStack("SEARCH")
+                        .replace(R.id.frame_container, fragment).commit();
             }
 
             @Override

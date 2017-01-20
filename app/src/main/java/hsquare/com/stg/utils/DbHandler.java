@@ -91,6 +91,50 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
     }
 
 
+    public ArrayList<Getset_ListView> searchWords(String searchWord){
+        ArrayList<Getset_ListView> mItems = new ArrayList<Getset_ListView>();
+        SQLiteDatabase db= getReadableDatabase();
+        String query = "Select distinct "+C_DiseasesCategory_ID+","+C_DiseasesCategory_Details+ " from " +Tbl_DiseasesContainer+" where "+C_DiseasesCategory_Details+" like " + "'%" + searchWord + "%'";
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndexOrThrow(C_DiseasesCategory_ID));
+                String word = cursor.getString(cursor.getColumnIndexOrThrow(C_DiseasesCategory_Details));
+                mItems.add(new Getset_ListView(id, word));
+            }
+
+            while (cursor.moveToNext());
+        }
+
+
+        query = "Select distinct " + C_Diseases_ID +","+ C_Diseases_Details + " from " + Tbl_DiseasesContainer + " where " + C_Diseases_Details + " like " + "'%" + searchWord + "%'";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndexOrThrow(C_Diseases_ID));
+                String word = cursor.getString(cursor.getColumnIndexOrThrow(C_Diseases_Details));
+                mItems.add(new Getset_ListView(id, word));
+            }
+            while (cursor.moveToNext());
+        }
+        query = "Select distinct " + C_SubDiseaseid + "," + C_SubDiseaseDetail + " from " + Tbl_DiseasesContainer + " where " + C_SubDiseaseDetail + " like " + "'%" + searchWord + "%'";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                String id = cursor.getString(cursor.getColumnIndexOrThrow(C_SubDiseaseid));
+                String word = cursor.getString(cursor.getColumnIndexOrThrow(C_SubDiseaseDetail));
+                mItems.add(new Getset_ListView(id, word));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return mItems;
+    }
+
+
+
+
     public String Load_Master_tables() {
         String res = null;
         SoapObject request = new SoapObject(NameSpace, LoadMasterMathod);
