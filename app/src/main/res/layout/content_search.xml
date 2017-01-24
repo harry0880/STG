@@ -13,8 +13,5 @@
     tools:context="hsquare.com.stg.Search"
     tools:showIn="@layout/activity_search">
 
-<ListView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/listview"></ListView>
+
 </RelativeLayout>

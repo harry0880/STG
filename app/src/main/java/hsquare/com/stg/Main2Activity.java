@@ -112,8 +112,6 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-
                 return false;
             }
         });
@@ -132,8 +130,8 @@ public class Main2Activity extends AppCompatActivity {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
-            getSupportFragmentManager().popBackStack(Disease_Fragments.cnt+"",
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+/*            getSupportFragmentManager().popBackStack(Disease_Fragments.cnt+"",
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
            // Disease_Fragments.arList.get(Disease_Fragments.cnt-1);
             super.onBackPressed();
         }

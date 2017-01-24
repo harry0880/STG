@@ -35,7 +35,8 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
     final String NameSpace = "http://tempuri.org/";
     String LoadMasterMathod = "master";
     String SoapLinkMaster = "http://tempuri.org/master";
-    final String URL = "http://android.dpmuhry.gov.in";
+   // final String URL = "http://android.dpmuhry.gov.in";
+   final String URL = "http://192.168.8.107/Service.asmx";
 
     JSONObject jsonResponse;
 
@@ -90,6 +91,23 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
         return arr;
     }
 
+    public ArrayList<Getset_ListView> getSubInnerList(Disease_Fragments obj) {
+        SQLiteDatabase db = getReadableDatabase();
+        // Cursor cr= db.rawQuery("select * from "+Tbl_DiseasesCaegory+" where "+C_DiseasesCategory_Details+" like %"+query+"%",null);
+        Cursor cr = db.rawQuery("select DISTINCT "+C_SubDiseaseid+","+C_SubDiseaseDetail+" from " + Tbl_DiseasesContainer+" where "+C_Diseases_ID+"="+obj.getFragment_id(), null);
+        ArrayList<Getset_ListView> arr = new ArrayList<>();
+
+        if (cr.getCount() > 0) {
+            cr.moveToFirst();
+
+            do {
+                arr.add(new Getset_ListView(cr.getString(0), cr.getString(1)));
+            } while (cr.moveToNext());
+        }
+        cr.close();
+        db.close();
+        return arr;
+    }
 
     public ArrayList<Getset_ListView> searchWords(String searchWord){
         ArrayList<Getset_ListView> mItems = new ArrayList<Getset_ListView>();
@@ -183,9 +201,22 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
         return "Success";
     }
 
-    public String getHTML() {
+    public String getHTMLfromDisease(Disease_Fragments getset) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c=db.rawQuery("select "+C_diseaseheaddetail_content+" from "+Tbl_DiseasesContainer,null);
+        Cursor c=db.rawQuery("select "+C_diseaseheaddetail_content+" from "+Tbl_DiseasesContainer+" where "+C_Diseases_ID+" = "+getset.getFragment_id(),null);
+        if(c.getCount()>0)
+        {
+            c.moveToFirst();
+            do{
+                return c.getString(0);
+            }while (c.moveToNext());
+        }
+        return "error";
+    }
+
+    public String getHTMLfromSubDisease(Disease_Fragments getset) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c=db.rawQuery("select "+C_diseaseheaddetail_content+" from "+Tbl_DiseasesContainer+" where "+C_SubDiseaseid+" = "+getset.getFragment_id(),null);
         if(c.getCount()>0)
         {
             c.moveToFirst();

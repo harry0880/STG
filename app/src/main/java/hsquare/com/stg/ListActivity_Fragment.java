@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +34,14 @@ public class ListActivity_Fragment extends Fragment {
     static Disease_Fragments getset=null;
     ArrayList<Getset_ListView> listItems;
     DbHandler dbh;
+    Intent intent;
 
     ArrayList<String> ar;
 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View list = inflater.inflate(R.layout.list_frag, container, false);
 
@@ -48,9 +51,19 @@ public class ListActivity_Fragment extends Fragment {
 
             listItems=dbh.getMainList();
         }
-        else if(getset.getFragment_id()!=null)
+        else if(getset.getFragment_id().substring(0,1).equals("1"))
         {
             listItems=dbh.getInnerList(getset);
+        }
+        else if(getset.getFragment_id().substring(0,1).equals("2"))
+        {
+                listItems=dbh.getSubInnerList(getset);
+        }
+        if (listItems.size()==1)
+        {
+            CreateIntent();
+            startActivity(intent);
+            getActivity().finish();
         }
         final ArrayAdapter<Getset_ListView> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         lv.setAdapter(adapter);
@@ -58,25 +71,23 @@ public class ListActivity_Fragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Disease_Fragments.cnt=Disease_Fragments.cnt+1;
-              if(Disease_Fragments.cnt==3)
-              {
-                  startActivity(new Intent(getActivity(),displayHTML.class));
-                   Disease_Fragments.cnt=0;
-                  getset.setFragment_id(null);
-                  getActivity().finish();
-              }
-    else
-                {
-
                  Getset_ListView ob=(Getset_ListView) adapter.getItem(position);
-                 getset.setFragment_id(ob.getId());
-                 getset.arList.add(ob.getId());
+
+                if(ob.getId().substring(0,1).equals("3"))
+                {
+                    CreateIntent();
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                    getset.setFragment_id(ob.getId());
+                getset.arList.add(ob.getId());
+
                  Fragment fragment=new ListActivity_Fragment();
                  FragmentManager fragmentManager = getFragmentManager();
                  fragmentManager.beginTransaction().addToBackStack(Disease_Fragments.cnt+"")
                         .replace(R.id.frame_container, fragment).commit();
-                }
+
+                Disease_Fragments.cnt++;
 
 
             }
@@ -84,6 +95,15 @@ public class ListActivity_Fragment extends Fragment {
 
 
         return list;
+    }
+
+    private void CreateIntent()
+    {
+       intent=new Intent(getActivity(),displayHTML.class);
+        intent.putExtra("getset", (Serializable) getset);
+        Disease_Fragments.cnt=0;
+      //  getset.setFragment_id(null);
+
     }
 
     private void init(View list)

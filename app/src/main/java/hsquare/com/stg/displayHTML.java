@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import hsquare.com.stg.getset.Disease_Fragments;
+import hsquare.com.stg.getset.Getset_ListView;
 import hsquare.com.stg.utils.DbHandler;
 
 public class displayHTML extends AppCompatActivity {
 
     TextView html;
     DbHandler dbh;
+    Disease_Fragments getset;
 
     String html_str="<h1>ACUTE FEVER</h1>\n" +
             "The overall mean oral temperature for healthy adult individuals is 36.8 ± 0.4ºC, with a nadir at 6 AM and a peak at 4-6 PM. A morning temperature of greater than 37.2ºC and an evening temperature of greater than 37.7ºC is often considered as fever. Fever may be continuous, intermittent or remittent. However, with frequent self-medication with antipyretics, classic patterns are not generally seen. \n" +
@@ -37,7 +41,7 @@ public class displayHTML extends AppCompatActivity {
             "fever such as in amoebic liver abscess. \n" +
             "<h1> Treatment </h1>\n" +
             "Routine use of antipyretics in low-grade fever is not justified. This may mask important clinical indications. However, in acute febrile illnesses suggestive of viral or bacterial cause, fever should be symptomatically treated. \n" +
-            "<h1>Nonpharmacological </h1>\n" +
+            "<a href=\"www.google.com\">Nonpharmacological </a>\n" +
             "\n" +
             "Hydrotherapy with tepid water, rest and plenty of oral fluids. \n" +
             "<h1>\n" +
@@ -69,16 +73,33 @@ public class displayHTML extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_html);
+        Intent intent = getIntent();
+        getset = (Disease_Fragments) intent.getSerializableExtra("getset");
         html=(TextView) findViewById(R.id.htmltag);
+        html.setMovementMethod(LinkMovementMethod.getInstance());
        dbh=new DbHandler(displayHTML.this);
-        html.setText(Html.fromHtml(dbh.getHTML()));
+
+    //    html.setText(Html.fromHtml(html_str));
+
+       if(getset.getFragment_id().substring(0,1).equals("3"))
+        {
+            html.setText(Html.fromHtml(dbh.getHTMLfromSubDisease(getset)));
+        }
+        else
+       {
+           html.setText(Html.fromHtml(dbh.getHTMLfromDisease(getset)));
+       }
+
 
 
     }
 
     @Override
     public void onBackPressed() {
+
         startActivity(new Intent(displayHTML.this,Main2Activity.class));
+        getset.setFragment_id(null);
+        finish();
         super.onBackPressed();
     }
 }
