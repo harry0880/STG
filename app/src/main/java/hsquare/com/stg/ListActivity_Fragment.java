@@ -59,7 +59,7 @@ public class ListActivity_Fragment extends Fragment {
         {
                 listItems=dbh.getSubInnerList(getset);
         }
-        if (listItems.size()==1)
+        if (listItems.get(0).getId().equals("0"))
         {
             CreateIntent();
             startActivity(intent);
@@ -79,16 +79,17 @@ public class ListActivity_Fragment extends Fragment {
                     startActivity(intent);
                     getActivity().finish();
                 }
+                else {
                     getset.setFragment_id(ob.getId());
-                getset.arList.add(ob.getId());
+                    getset.arList.add(ob.getId());
 
-                 Fragment fragment=new ListActivity_Fragment();
-                 FragmentManager fragmentManager = getFragmentManager();
-                 fragmentManager.beginTransaction().addToBackStack(Disease_Fragments.cnt+"")
-                        .replace(R.id.frame_container, fragment).commit();
+                    Fragment fragment = new ListActivity_Fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().addToBackStack(Disease_Fragments.cnt + "")
+                            .replace(R.id.frame_container, fragment).commit();
 
-                Disease_Fragments.cnt++;
-
+                    Disease_Fragments.cnt++;
+                }
 
             }
         });

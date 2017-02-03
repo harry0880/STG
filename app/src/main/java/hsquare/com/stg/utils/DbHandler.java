@@ -11,12 +11,14 @@ import android.text.Spanned;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hsquare.com.stg.getset.Disease_Fragments;
 import hsquare.com.stg.getset.Getset_ListView;
@@ -35,8 +37,12 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
     final String NameSpace = "http://tempuri.org/";
     String LoadMasterMathod = "master";
     String SoapLinkMaster = "http://tempuri.org/master";
+
+    String LoadGetStock = "GetStock";
+    String SoapLinkGetStock = "http://tempuri.org/GetStock";
+
    // final String URL = "http://android.dpmuhry.gov.in";
-   final String URL = "http://192.168.8.107/Service.asmx";
+   final String URL = "http://192.168.8.100/GetStockDetails.asmx";
 
     JSONObject jsonResponse;
 
@@ -213,6 +219,60 @@ public class DbHandler extends SQLiteOpenHelper implements DbConstant {
         }
         return "error";
     }
+
+    public ArrayList<CardGetSet> GetStock(String Drugid) {
+        String res = null;
+        ArrayList<CardGetSet> data=new ArrayList<>();
+        SoapObject request = new SoapObject(NameSpace, LoadGetStock);
+
+        PropertyInfo pi=new PropertyInfo();
+        pi.setName("instName");
+        pi.setType(String.class);
+        pi.setValue("000525");
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("Drugcode");
+        pi.setType(String.class);
+        pi.setValue(Drugid);
+        request.addProperty(pi);
+
+        SoapSerializationEnvelope envolpe = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envolpe.dotNet = true;
+        envolpe.setOutputSoapObject(request);
+        HttpTransportSE androidHTTP = new HttpTransportSE(URL);
+
+        try {
+            androidHTTP.call(SoapLinkGetStock, envolpe);
+            SoapPrimitive response = (SoapPrimitive) envolpe.getResponse();
+            res = response.toString();
+            //System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            data.clear();
+            data=null;
+            return data;
+        }
+        int lengthJsonArr;
+        try {
+            res = "{ Stock :" + res + " }";
+            jsonResponse = new JSONObject(res);
+            JSONArray jsonMainNode = jsonResponse.optJSONArray("Stock");
+            lengthJsonArr = jsonMainNode.length();
+            for (int j = 0; j < lengthJsonArr; j++) {
+                JSONObject jsonChildNode = jsonMainNode.getJSONObject(j);
+              data.add( new CardGetSet("Stock: "+jsonChildNode.optString("ClosingStock").toString(),"Institute Name: "+jsonChildNode.optString("Institute").toString()));
+            }
+        }
+        catch (Exception e)
+        {
+            data.clear();
+            data=null;
+            return data;
+        }
+return data;
+    }
+
 
     public String getHTMLfromSubDisease(Disease_Fragments getset) {
         SQLiteDatabase db = getReadableDatabase();

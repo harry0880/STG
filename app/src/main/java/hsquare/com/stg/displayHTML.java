@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.widget.TextView;
 
 import hsquare.com.stg.getset.Disease_Fragments;
 import hsquare.com.stg.getset.Getset_ListView;
 import hsquare.com.stg.utils.DbHandler;
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 public class displayHTML extends AppCompatActivity {
 
@@ -41,7 +44,7 @@ public class displayHTML extends AppCompatActivity {
             "fever such as in amoebic liver abscess. \n" +
             "<h1> Treatment </h1>\n" +
             "Routine use of antipyretics in low-grade fever is not justified. This may mask important clinical indications. However, in acute febrile illnesses suggestive of viral or bacterial cause, fever should be symptomatically treated. \n" +
-            "<a href=\"www.google.com\">Nonpharmacological </a>\n" +
+            "<a href=\"2.1.9\">Nonpharmacological </a>\n" +
             "\n" +
             "Hydrotherapy with tepid water, rest and plenty of oral fluids. \n" +
             "<h1>\n" +
@@ -69,6 +72,7 @@ public class displayHTML extends AppCompatActivity {
             "<li>Plenty of fluids should be taken. Stay in cool environment. Washing/sponging of face and limbs should be done repeatedly. </li>\n" +
             "</ul>\n" +
             "  ";
+    String u=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,16 +83,27 @@ public class displayHTML extends AppCompatActivity {
         html.setMovementMethod(LinkMovementMethod.getInstance());
        dbh=new DbHandler(displayHTML.this);
 
-    //    html.setText(Html.fromHtml(html_str));
+       html.setText(Html.fromHtml(html_str));
 
-       if(getset.getFragment_id().substring(0,1).equals("3"))
+        BetterLinkMovementMethod method=BetterLinkMovementMethod.linkifyHtml(html);
+      method.setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
+          @Override
+          public boolean onClick(TextView textView, String url) {
+        startActivity(new Intent(displayHTML.this,StockDetails.class).putExtra("Drug",url));
+              return false;
+          }
+      });
+
+        //html.setMovementMethod(LinkMovementMethod.getInstance());
+
+     /*  if(getset.getFragment_id().substring(0,1).equals("3"))
         {
             html.setText(Html.fromHtml(dbh.getHTMLfromSubDisease(getset)));
         }
         else
        {
            html.setText(Html.fromHtml(dbh.getHTMLfromDisease(getset)));
-       }
+       }*/
 
 
 

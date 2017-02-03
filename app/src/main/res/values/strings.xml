@@ -30,6 +30,7 @@
     </string-array>
     <string name="title_activity_main2">STG</string>
     <string name="title_activity_search">Search</string>
+    <string name="title_activity_stock">Stock Details</string>
 
 
 </resources>
